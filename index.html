@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calcule o impacto de amortizações extras em financiamentos SAC ou Price.">
+  <title>Quitar Financiamento | Zetz Capital</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+  <script src="script.js?v=2" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="https://zetz-capital.github.io/zetz-capital/" class="brand">
+      <img src="assets/favicon.svg" alt="">
+      <span>ZETZ CAPITAL</span>
+    </a>
+    <a href="https://zetz-capital.github.io/zetz-capital/" class="back">← Todas as ferramentas</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="kicker">FINANCIAMENTO IMOBILIÁRIO</p>
+      <h1>Quanto antes você pode quitar seu imóvel?</h1>
+      <p>Compare o contrato original com pagamentos extras e veja a redução do prazo e dos juros.</p>
+    </section>
+
+    <section class="calculator">
+      <form id="payoff-form" class="panel">
+        <div class="panel-title"><span>1</span><div><h2>Dados do financiamento</h2><p>Use o saldo e o prazo restantes.</p></div></div>
+        <div class="grid">
+          <label class="field full">Saldo devedor atual
+            <div class="money"><span>R$</span><input id="balance" inputmode="decimal"></div>
+          </label>
+          <label class="field">Taxa de juros anual
+            <div class="suffix"><input id="rate" type="number" step="0.01" min="0"><span>% a.a.</span></div>
+          </label>
+          <label class="field">Sistema de amortização
+            <select id="system">
+              <option value="sac">SAC — parcela decrescente</option>
+              <option value="price">Price — parcela constante</option>
+            </select>
+          </label>
+          <label class="field">Prazo restante
+            <div class="suffix"><input id="years" type="number" min="0" max="50"><span>anos</span></div>
+          </label>
+          <label class="field">Meses adicionais
+            <div class="suffix"><input id="months" type="number" min="0" max="11"><span>meses</span></div>
+          </label>
+        </div>
+
+        <div class="divider"></div>
+        <div class="panel-title compact"><span>2</span><div><h2>Pagamentos extras</h2><p>A simulação reduz o prazo do financiamento.</p></div></div>
+        <div class="grid">
+          <label class="field full">Valor extra todos os meses
+            <div class="money"><span>R$</span><input id="monthly-extra" inputmode="decimal"></div>
+          </label>
+          <label class="field">Valor extra periódico
+            <div class="money"><span>R$</span><input id="annual-extra" inputmode="decimal"></div>
+          </label>
+          <label class="field">Frequência do extra
+            <select id="annual-extra-month">
+              <option value="12">A cada 12 meses</option>
+              <option value="6">A cada 6 meses</option>
+            </select>
+          </label>
+          <label class="field">Pagamento único
+            <div class="money"><span>R$</span><input id="one-time-extra" inputmode="decimal"></div>
+          </label>
+          <label class="field">Após quantos meses?
+            <div class="suffix"><input id="one-time-month" type="number" min="1"><span>meses</span></div>
+          </label>
+        </div>
+
+        <button type="submit">Calcular economia</button>
+        <button type="button" id="reset" class="secondary">Restaurar valores</button>
+        <p id="error" class="error" role="alert"></p>
+      </form>
+
+      <section class="panel results">
+        <div class="panel-title"><span>3</span><div><h2>Resultado</h2><p>Estimativa sem seguros, tarifas, TR ou correções adicionais.</p></div></div>
+        <div class="headline-result">
+          <span>Você pode quitar</span>
+          <strong id="time-saved">—</strong>
+          <small>antes do prazo original</small>
+        </div>
+        <div class="metrics">
+          <article><span>Economia de juros</span><strong id="interest-saved">R$ 0,00</strong></article>
+          <article><span>Novo prazo</span><strong id="new-term">—</strong></article>
+          <article><span>Juros sem extras</span><strong id="base-interest">R$ 0,00</strong></article>
+          <article><span>Juros com extras</span><strong id="extra-interest">R$ 0,00</strong></article>
+        </div>
+        <div class="chart-box"><canvas id="balance-chart"></canvas></div>
+      </section>
+    </section>
+
+    <section class="explain">
+      <div><p class="kicker">COMO FUNCIONA</p><h2>Amortizações extras reduzem o principal e os juros futuros.</h2></div>
+      <div>
+        <p>No SAC, a amortização contratual é constante e a parcela diminui. No Price, a prestação-base é constante.</p>
+        <p>O SAC está selecionado como padrão. O resultado bancário pode variar por TR, seguros, tarifas e regras do contrato.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
